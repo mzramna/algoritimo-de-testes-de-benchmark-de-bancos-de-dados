@@ -1,0 +1,16 @@
+CREATE TABLE IF NOT EXISTS "operacoes" (
+	"id"	INTEGER UNIQUE,
+	"tipoOperacao"	INTEGER NOT NULL,
+	"nomeBD"	TEXT NOT NULL,
+	"idNoBD" INTEGER ,
+	"adicionais"	TEXT,
+	"dados"	TEXT NOT NULL,
+	PRIMARY KEY("id" AUTOINCREMENT)
+);
+
+CREATE TABLE IF NOT EXISTS "contadores" (
+	"id"	INTEGER UNIQUE,
+	"nomeBD"	TEXT NOT NULL,
+	"numeroDDadosCadastrados" INTEGER NOT NULL,
+	PRIMARY KEY("id" AUTOINCREMENT)
+);

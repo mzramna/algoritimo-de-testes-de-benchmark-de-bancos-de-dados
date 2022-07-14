@@ -1,0 +1,55 @@
+services:
+    postgres:
+        build: ./alpine_postgres
+        environment:
+            POSTGRES_DB: sakila
+            POSTGRES_USER: mzramna
+            POSTGRES_PASSWORD: safePassword
+        ports:
+            - "5432:5432"
+        volumes:
+            - $config_folder/postgres/data:/var/lib/postgresql/data
+            - $config_folder/postgres/logs:/var/log
+            - $config_folder/postgres/config:/config
+            - ../postgres\ default\ exemple.sql:/docker-entrypoint-initdb.d/postgres\ default\ exemple.sql
+            #- /var/run/docker.sock:/var/run/docker.sock:ro
+            #- /proc/:/host/proc/:ro
+            #- /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
+        restart: unless-stopped
+        networks:
+            - benchmarks_db
+        deploy:
+            resources:
+                limits:
+                    cpus: "1.0"
+                    memory: 1G
+    mariadb:
+        build: ./alpine_mariadb
+        environment:
+            MYSQL_ROOT_PASSWORD: SafestRootPassword
+            MYSQL_DATABASE: sakila
+            MYSQL_USER: mzramna
+            MYSQL_PASSWORD: safePassword
+            LOG_LOCAL: /var/log/mysql/general-log.log
+        ports:
+            - "3306:3306"
+        volumes:
+            - $config_folder/mariadb/data:/var/lib/mysql
+            - $config_folder/mariadb/logs:/var/log
+            - $config_folder/mariadb/config:/config
+            - ../mysql\ default\ exemple.sql:/docker-entrypoint-initdb.d/mysql\ default\ exemple.sql
+            #- /var/run/docker.sock:/var/run/docker.sock:ro
+            #- /proc/:/host/proc/:ro
+            #- /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
+
+        restart: unless-stopped
+        networks:
+            - benchmarks_db
+        deploy:
+            resources:
+                limits:
+                    cpus: "1.0"
+                    memory: 1G
+networks:
+    benchmarks_db: 
+        driver: bridge 

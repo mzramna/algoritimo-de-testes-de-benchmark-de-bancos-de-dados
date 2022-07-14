@@ -1,0 +1,3 @@
+from geração_bd_testes import Gerar_bd_teste
+
+Gerar_bd_teste(local_sqlite="scripts/initial_db.db").executar(quantidade_elementos_iniciais_insercao=50000,quantidade_elementos_totais=5000000)
